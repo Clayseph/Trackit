@@ -7,7 +7,24 @@ export default class App extends React.Component {
     super();
     this.state={stage:'config'};
   }
+  componentDidMount(){
+   this.getWorkouts();
+  }
+
+  getWorkouts(){
+    fetch('https://muscles.herokuapp.com/workouts/')
+    .then((response) => response.json())
+    .then((responseJson)=>{
+      console.log(responseJson)
+      this.setState({responseJson}) 
+    }) // parses response to JSON
+    .catch((error)=>{
+      console.log('Fetch Error',error);
+    })
+  };
+
   render() {
+    console.log('turtles')
     return (
         <Container>
           <Header>
@@ -17,11 +34,12 @@ export default class App extends React.Component {
               </Button>
             </Left>
             <Body>
-              <Text style={styles.title}>Trackitt</Text>
+              <Text style={styles.title}>Trackkit</Text>
             </Body>
           </Header>
+          {this.state.responseJson ? 
+              <Text style={styles.container }>{this.state.responseJson[0].name}</Text> : null}
         </Container>
-
     );
   }
 }

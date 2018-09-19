@@ -4,6 +4,7 @@ import { Spinner, Header, Left, Icon, Button, Container, Body, H2, Drawer } from
 
 import Card from './components/Card';
 import Sidebar from './components/SideBar';
+import AddExercise from './components/AddExercise';
 
 export default class App extends React.Component {
   constructor(){
@@ -20,7 +21,7 @@ export default class App extends React.Component {
     .then((responseJson)=>{
       this.setState({
         responseJson,
-        stage: 'exercises'
+        stage: 'addExercise'
       }) 
       console.log('got it')
     }) // parses response to JSON
@@ -70,7 +71,7 @@ export default class App extends React.Component {
           {this.state.stage && this.state.stage == 'exercises' ? 
               <Card workouts={this.state.responseJson}/> : null}
           {this.state.stage == 'addExercise' ? 
-          <Text>WAHHHHHHHHHHHHHHHHHHHT</Text> : null} 
+          <AddExercise/> : null} 
         </Container>
       </Drawer>
     );

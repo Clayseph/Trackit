@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
-import {
-  Text,
-} from 'react-native';
-
-import {Content} from 'native-base';
+import { Text, StyleSheet } from 'react-native';
+import { Content, Button } from 'native-base';
 
 export default class Sidebar extends Component {
   render() {
     return (
-          <Content style={{backgroundColor:'#FFFFFF'}}>
-            <Text>Drawer</Text>
+          <Content style={styles.sidebar}>
+              <Button full style={styles.button} onPress={this.props.exercisesButtonPress}>
+                <Text style={styles.buttonText}>My Exercises</Text>
+              </Button>  
+              <Button full style={styles.button} onPress={this.props.addExerciseButtonPress}>
+                <Text style={styles.buttonText}>Add Exercise</Text>
+              </Button>   
+              <Button full style={styles.button}>
+                <Text style={styles.buttonText}>Dummy</Text>
+              </Button>   
+              <Button full style={styles.button}>
+                <Text style={styles.buttonText}>Dummy</Text>
+              </Button>           
           </Content>
     );
   }
 }
-
-module.exports = Sidebar;
+const styles = StyleSheet.create({
+    sidebar:{
+      backgroundColor:'lightblue',
+      paddingTop: 50
+    },
+    button:{
+      marginBottom: 5,
+      height:75
+    },
+    buttonText:{
+      color:'white'
+    }
+});

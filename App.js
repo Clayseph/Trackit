@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView} from 'react-native';
-import { Header, Left, Icon, Button, Container, Body, H2, Drawer } from 'native-base';
+import { Spinner, Header, Left, Icon, Button, Container, Body, H2, Drawer } from 'native-base';
 
 import Card from './components/Card';
 import Sidebar from './components/SideBar';
@@ -8,9 +8,9 @@ import Sidebar from './components/SideBar';
 export default class App extends React.Component {
   constructor(){
     super();
-    this.state={stage:'config'};
+    this.state={};
   }
-  componentDidMount(){
+  componentWillMount(){
    this.getWorkouts();
   }
 
@@ -18,7 +18,10 @@ export default class App extends React.Component {
     fetch('https://muscles.herokuapp.com/workouts/')
     .then((response) => response.json())
     .then((responseJson)=>{
-      this.setState({responseJson}) 
+      this.setState({
+        responseJson,
+        stage: 'exercises'
+      }) 
       console.log('got it')
     }) // parses response to JSON
     .catch((error)=>{
@@ -32,11 +35,25 @@ export default class App extends React.Component {
     this.drawer._root.open()
   };
 
+  openConfigPage = () => {
+    this.closeDrawer();
+    this.setState({stage: 'addExercise'})
+  }
+
+  openExercisesPage = () => {
+    this.closeDrawer();
+    this.setState({stage: 'exercises'})
+  }
+
   render() {
     return (
       <Drawer
         ref={(ref) => { this.drawer = ref; }}
-        content={<Sidebar/>}
+        content={
+          <Sidebar 
+            exercisesButtonPress={this.openExercisesPage}
+            addExerciseButtonPress={this.openConfigPage}
+          />}
         onClose={() => this.closeDrawer()} >
         <Container>
           <Header style={styles.header}>
@@ -49,9 +66,11 @@ export default class App extends React.Component {
               <H2 style={styles.title}>Trackkit</H2>
             </Body>
           </Header>
-          {this.state.responseJson ? 
+          {this.state.responseJson ? null : <Spinner/>}
+          {this.state.stage && this.state.stage == 'exercises' ? 
               <Card workouts={this.state.responseJson}/> : null}
-               
+          {this.state.stage == 'addExercise' ? 
+          <Text>WAHHHHHHHHHHHHHHHHHHHT</Text> : null} 
         </Container>
       </Drawer>
     );
@@ -69,11 +88,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    height: 80,
+    height: 70,
+    paddingTop:25
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     color: 'white',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingLeft: 30
   }
 });

@@ -4,7 +4,7 @@ import {StyleSheet, ScrollView, View, Text} from 'react-native'
 export default class DrawerExample extends Component {
     render() {
       return (
-        <ScrollView>
+        <View>
           {this.props.workouts.map((workout,id) =>
               <View style={styles.card} key={id}>
                 <Text style={styles.workoutName}>{workout.name}</Text>
@@ -15,7 +15,7 @@ export default class DrawerExample extends Component {
                 </View>
               </View>
           )}
-        </ScrollView>
+        </View>
       );
     }
   }

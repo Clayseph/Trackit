@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, RefreshControl} from 'react-native';
 import { Spinner, Header, Left, Icon, Button, Container, Body, H2, Drawer } from 'native-base';
 
 import Card from './components/Card';
@@ -9,10 +9,18 @@ import AddExercise from './components/AddExercise';
 export default class App extends React.Component {
   constructor(){
     super();
-    this.state={};
+    this.state={
+      refreshing: true
+    };
   }
+
   componentWillMount(){
    this.getWorkouts();
+  }
+
+  onRefresh = () => {
+    this.setState({refreshing: true})
+    this.getWorkouts();
   }
 
   getWorkouts(){
@@ -21,7 +29,8 @@ export default class App extends React.Component {
     .then((responseJson)=>{
       this.setState({
         responseJson,
-        stage: 'addExercise'
+        stage: 'exercises',
+        refreshing: false
       }) 
       console.log('got it')
     }) // parses response to JSON
@@ -38,12 +47,17 @@ export default class App extends React.Component {
 
   openConfigPage = () => {
     this.closeDrawer();
-    this.setState({stage: 'addExercise'})
+    this.setState({
+      stage: 'addExercise',
+    });
   }
 
   openExercisesPage = () => {
     this.closeDrawer();
-    this.setState({stage: 'exercises'})
+    this.onRefresh();
+    this.setState({
+      stage: 'exercises'
+    });
   }
 
   render() {
@@ -67,11 +81,20 @@ export default class App extends React.Component {
               <H2 style={styles.title}>Trackkit</H2>
             </Body>
           </Header>
-          {this.state.responseJson ? null : <Spinner/>}
-          {this.state.stage && this.state.stage == 'exercises' ? 
-              <Card workouts={this.state.responseJson}/> : null}
-          {this.state.stage == 'addExercise' ? 
-          <AddExercise/> : null} 
+          {/* {this.state.refreshing ? <Spinner/> : null} */}
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+              />
+            }
+          >
+            {this.state.stage && this.state.stage == 'exercises' ? 
+                <Card workouts={this.state.responseJson}/> : null}
+            {this.state.stage == 'addExercise' ? 
+            <AddExercise/> : null} 
+          </ScrollView>
         </Container>
       </Drawer>
     );

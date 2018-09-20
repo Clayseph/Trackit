@@ -14,6 +14,9 @@ export default class App extends React.Component {
   componentWillMount(){
    this.getWorkouts();
   }
+  componentDidMount(){
+   this.getWorkouts();
+  }
 
   getWorkouts(){
     fetch('https://muscles.herokuapp.com/workouts/')

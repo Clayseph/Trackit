@@ -24,7 +24,7 @@ export default class Sidebar extends Component {
 }
 const styles = StyleSheet.create({
     sidebar:{
-      backgroundColor:'lightblue',
+      backgroundColor:'#fff',
       paddingTop: 50
     },
     button:{

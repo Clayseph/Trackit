@@ -56,12 +56,12 @@ export default class AddExercise extends Component{
             referrer: "no-referrer", // no-referrer, *client
             body: JSON.stringify(exercise), // body data type must match "Content-Type" header
         })
-        .then(response => response.json())
-        .then(res =>{
-            console.log('saved!!!!!!!!!!!', res)
+        // .then(response => response.json())
+        .then(response =>{
+            this.props.returnFunction();
         })
-        .catch(err =>{
-            console.log(err)
+        .catch(error =>{
+            console.log("Error",error)
         }); // parses response to JSON
     }
 

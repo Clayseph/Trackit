@@ -24,8 +24,9 @@ export default class DrawerExample extends Component {
     card:{
       alignItems: 'stretch',
       padding: 10,
-      backgroundColor: 'lightblue',
-      borderColor: 'white',
+      margin:3,
+      backgroundColor: 'lightgrey',
+      borderColor: 'grey',
       borderWidth: 3
     },
     content:{
@@ -38,6 +39,7 @@ export default class DrawerExample extends Component {
       justifyContent: 'space-between',
       alignItems: 'flex-end',
       borderWidth: 3,
+      backgroundColor: 'white',
       borderColor: 'white'
     },
     workoutName:{

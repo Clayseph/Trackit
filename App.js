@@ -91,7 +91,7 @@ export default class App extends React.Component {
             }
           >
             {this.state.stage && this.state.stage == 'exercises' ? 
-                <Card workouts={this.state.responseJson}/> : null}
+                <Card workouts={this.state.responseJson} refresh={this.onRefresh}/> : null}
             {this.state.stage == 'addExercise' ? 
             <AddExercise returnFunction={this.openExercisesPage}/> : null} 
           </ScrollView>

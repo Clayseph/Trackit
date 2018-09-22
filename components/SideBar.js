@@ -3,13 +3,14 @@ import {
   Text, StyleSheet, Image, View,
 } from 'react-native';
 import { Content, Button } from 'native-base';
+import barbell from '../static/barbell.png';
 
 export default class Sidebar extends Component {
   render() {
     return (
           <Content style={styles.sidebar}>
               <View style={styles.imageContainer}>
-                <Image style={styles.image} source={require('../static/barbell.png')} />
+                <Image style={styles.image} source={barbell} />
               </View>
               <Button full style={styles.button} onPress={this.props.exercisesButtonPress}>
                 <Text style={styles.buttonText}>My Exercises</Text>

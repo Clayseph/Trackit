@@ -29,10 +29,17 @@ export default class DrawerExample extends Component {
 };
 
 editExercise = (id) => {
+  if(this.state.edit){
+    this.setState({
+      edit: false,
+      editId: null
+    });
+  } else{
   this.setState({
     edit: true,
     editId: id
   });
+  }
 }
 
 updateSets = (event) => {
@@ -105,9 +112,14 @@ updateExercise = (id) => {
                           <Text>weight</Text>
                         </Item>
                       </View> 
-                      <Button full style={styles.button} onPress={()=> this.updateExercise(workout._id)}>
-                        <Text style={styles.buttonText}>Update</Text>
-                      </Button>
+                      <View style={styles.buttonContainer}>
+                        <Button danger style={styles.button} onPress={()=> this.deleteCard(workout._id)}>
+                          <Text style={styles.buttonText}>Delete</Text>
+                        </Button>
+                        <Button primary style={styles.button} onPress={()=> this.updateExercise(workout._id)}>
+                          <Text style={styles.buttonText}>Update</Text>
+                        </Button>
+                      </View>
                     </View> 
                   :
                   <View style={styles.row}>
@@ -124,10 +136,16 @@ updateExercise = (id) => {
 }
 
 const styles = StyleSheet.create({
+  buttonContainer:{
+    flex:1,
+    flexDirection:'row',
+    alignContent:'stretch'
+  },
   button:{
     flex:1,
-    marginTop: 10,
-    height:50
+    margin: 5,
+    marginTop:10,
+    justifyContent:'center'
   },
   buttonText:{
     color:'white'

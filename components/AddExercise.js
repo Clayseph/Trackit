@@ -75,15 +75,15 @@ export default class AddExercise extends Component{
                     </Item>
                     <Item stackedLabel>
                         <Label>Sets</Label>
-                        <Input onChangeText={this.updateSets}/>
+                        <Input keyboardType={'numeric'} onChangeText={this.updateSets}/>
                     </Item>
                     <Item stackedLabel>
                         <Label>Reps</Label>
-                        <Input onChangeText={this.updateReps}/>
+                        <Input keyboardType={'numeric'} onChangeText={this.updateReps}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Weight</Label>
-                        <Input onChangeText={this.updateWeight}/>
+                        <Input keyboardType={'numeric'} onChangeText={this.updateWeight}/>
                     </Item> 
                 </Form>
                 <Button full style={styles.button} onPress={this.saveExercise}>

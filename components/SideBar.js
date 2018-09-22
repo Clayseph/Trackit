@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import {
+  Text, StyleSheet, Image, View,
+} from 'react-native';
 import { Content, Button } from 'native-base';
 
 export default class Sidebar extends Component {
   render() {
     return (
           <Content style={styles.sidebar}>
+              <View style={styles.imageContainer}>
+                <Image style={styles.image} source={require('../static/barbell.png')} />
+              </View>
               <Button full style={styles.button} onPress={this.props.exercisesButtonPress}>
                 <Text style={styles.buttonText}>My Exercises</Text>
               </Button>
@@ -23,15 +28,22 @@ export default class Sidebar extends Component {
   }
 }
 const styles = StyleSheet.create({
-  sidebar: {
-    backgroundColor: '#fff',
-    paddingTop: 50,
-  },
   button: {
     marginBottom: 5,
     height: 75,
   },
   buttonText: {
     color: 'white',
+  },
+  image: {
+    height: 150,
+    width: 150,
+  },
+  imageContainer: {
+    alignItems: 'center',
+  },
+  sidebar: {
+    backgroundColor: '#fff',
+    paddingTop: 50,
   },
 });

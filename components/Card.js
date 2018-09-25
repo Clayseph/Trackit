@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { Input, Item, Button } from 'native-base';
 
-export default class DrawerExample extends Component {
+export default class Card extends Component {
   constructor(){
     super();
     this.state = {}

@@ -1,21 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, RefreshControl} from 'react-native';
-import { Spinner, Header, Left, Icon, Button, Container, Body, H2, Drawer } from 'native-base';
+import { StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import {Header, Left, Icon, Button, Container, Body, H2, Drawer } from 'native-base';
 
-import Card from './components/Card';
-import Sidebar from './components/SideBar';
 import AddExercise from './components/AddExercise';
+import Card from './components/Card';
+import Login from './components/Login';
+import Sidebar from './components/SideBar';
 
 export default class App extends React.Component {
   constructor(){
     super();
     this.state={
-      refreshing: true
+      refreshing: true,
+      stage:'login'
     };
-  }
-
-  componentWillMount(){
-   this.getWorkouts();
   }
 
   onRefresh = () => {
@@ -28,19 +26,20 @@ export default class App extends React.Component {
     .then((response) => response.json())
     .then((responseJson)=>{
       this.setState({
-        responseJson,
+        responseJson: responseJson,
         stage: 'exercises',
         refreshing: false
       }) 
-      console.log('got it')
     }) // parses response to JSON
     .catch((error)=>{
       console.log('Fetch Error',error);
     })
   };
+
   closeDrawer = () => {
     this.drawer._root.close()
   };
+
   openDrawer = () => {
     this.drawer._root.open()
   };
@@ -60,48 +59,58 @@ export default class App extends React.Component {
     });
   }
 
+  saveUserId = (userId) =>{
+    this.setState({
+      userId: userId
+    });
+    this.getWorkouts();
+  }
+
   render() {
     return (
-      <Drawer
-        ref={(ref) => { this.drawer = ref; }}
-        content={
-          <Sidebar 
-            exercisesButtonPress={this.openExercisesPage}
-            addExerciseButtonPress={this.openConfigPage}
-          />}
-        onClose={() => this.closeDrawer()} >
-        <Container>
-          <Header style={styles.header}>
-            <Left>
-              <Button transparent onPress={ ()=> this.openDrawer()}>
-                <Icon name='menu'/>
-              </Button>
-            </Left>
-            <Body style={styles.body}>
-              <H2 style={styles.title}>Trackkit</H2>
-            </Body>
-          </Header>
-          {/* {this.state.refreshing ? <Spinner/> : null} */}
-          <ScrollView
-            refreshControl={
+        <Drawer
+          ref={(ref) => { this.drawer = ref; }}
+          content={
+            <Sidebar 
+              exercisesButtonPress={this.openExercisesPage}
+              addExerciseButtonPress={this.openConfigPage}
+            />}
+          onClose={() => this.closeDrawer()} >
+          <Container>
+        {this.state.stage === 'login' ? <Login saveUserId={this.saveUserId}/> : 
+            <Header style={styles.header}>
+              <Left>
+                <Button transparent onPress={ ()=> this.openDrawer()}>
+                  <Icon name='menu'/>
+                </Button>
+              </Left>
+              <Body style={styles.body}>
+                <H2 style={styles.title}>Trackkit</H2>
+              </Body>
+            </Header>
+            }
+            {this.state.stage == 'exercises' ? 
+            <ScrollView
+              refreshControl={
               <RefreshControl
                 refreshing={this.state.refreshing}
-                onRefresh={this.onRefresh}
-              />
-            }
-          >
-            {this.state.stage && this.state.stage == 'exercises' ? 
-                <Card workouts={this.state.responseJson} refresh={this.onRefresh}/> : null}
-            {this.state.stage == 'addExercise' ? 
-            <AddExercise returnFunction={this.openExercisesPage}/> : null} 
-          </ScrollView>
-        </Container>
-      </Drawer>
+                onRefresh={this.onRefresh}/>
+                }>
+              <Card workouts={this.state.responseJson} refresh={this.onRefresh}/> 
+            </ScrollView>
+                  : null}
+              {this.state.stage == 'addExercise' ? 
+              <AddExercise returnFunction={this.openExercisesPage}/> : null} 
+          </Container>
+        </Drawer>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container:{
+    paddingTop:10
+  },
   body: {
     flexDirection: 'row'
   },
@@ -112,8 +121,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    height: 70,
-    paddingTop:25
+    height: 70
   },
   title: {
     fontSize: 28,

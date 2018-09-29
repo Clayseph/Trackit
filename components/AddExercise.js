@@ -3,8 +3,8 @@ import { Text, View, StyleSheet } from 'react-native';
 import {Form, Item, Input, Label, Button} from 'native-base'
 export default class AddExercise extends Component{
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
     }
     componentWillMount(){
         this.setInitialFormState();
@@ -40,6 +40,7 @@ export default class AddExercise extends Component{
 
     saveExercise = () => {
         const exercise = {
+            userId: this.props.userId,
             name: this.state.name, 
             sets: this.state.sets,
             reps: this.state.reps,

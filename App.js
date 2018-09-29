@@ -18,22 +18,37 @@ export default class App extends React.Component {
 
   onRefresh = () => {
     this.setState({refreshing: true})
-    this.getWorkouts();
+    this.getWorkouts(this.state.userId);
   }
 
-  getWorkouts(){
-    fetch('https://muscles.herokuapp.com/workouts/')
-    .then((response) => response.json())
-    .then((responseJson)=>{
-      this.setState({
-        responseJson: responseJson,
-        stage: 'exercises',
-        refreshing: false
-      }) 
-    }) // parses response to JSON
-    .catch((error)=>{
-      console.log('Fetch Error',error);
-    })
+  getWorkouts(userId){
+    return fetch('https://muscles.herokuapp.com/workouts/user', {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            redirect: "follow", // manual, *follow, error
+            referrer: "no-referrer", // no-referrer, *client
+            body: JSON.stringify({userId: userId}), // body data type must match "Content-Type" header
+        })
+        .then(response => response.json())
+        .then(responseJson =>{
+            if(responseJson){
+              this.setState({
+                responseJson: responseJson,
+                stage: 'exercises',
+                refreshing: false
+              });
+
+            } else{
+                console.log('Get user workouts failed')
+            }
+        })
+        .catch(error =>{
+            console.log("Error",error)
+        }); // parses response to JSON
   };
 
   closeDrawer = () => {
@@ -63,7 +78,7 @@ export default class App extends React.Component {
     this.setState({
       userId: userId
     });
-    this.getWorkouts();
+    this.getWorkouts(userId);
   }
 
   render() {
@@ -100,7 +115,7 @@ export default class App extends React.Component {
             </ScrollView>
                   : null}
               {this.state.stage == 'addExercise' ? 
-              <AddExercise returnFunction={this.openExercisesPage}/> : null} 
+              <AddExercise userId={this.state.userId} returnFunction={this.openExercisesPage}/> : null} 
           </Container>
         </Drawer>
     );

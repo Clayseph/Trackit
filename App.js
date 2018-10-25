@@ -22,7 +22,7 @@ export default class App extends React.Component {
   }
 
   getWorkouts(userId){
-    return fetch('https://muscles.herokuapp.com/workouts/user', {
+    return fetch('https:/localhost:5000/workouts/user', {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, cors, *same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

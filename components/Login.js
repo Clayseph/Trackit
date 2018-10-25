@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
-import {
-  Form, Item, Input, Label, Button,
-} from 'native-base';
+import { Text, View, StyleSheet, Image, AsyncStorage } from 'react-native';
+import { Form, Item, Input, Label, Button } from 'native-base';
 import barbell from '../static/barbell.png'
 
 export default class Login extends Component {
+    componentWillMount(){
+        checkForRememberedLogin();
+    }
+
+    checkForRememberedLogin = () =>{
+        AsyncStorage.getItem("userId").then((res) => {
+            this.props.saveUserId(res);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
     updateUsername = (event) =>{
         this.setState({
             username: event
@@ -36,7 +46,7 @@ export default class Login extends Component {
         .then(response => response.json())
         .then(response =>{
             if(response){
-                console.log(response._id)
+                AsyncStorage.setItem("userId",response._id);
                 this.props.saveUserId(response._id);
             } else{
                 console.log('Login Failed')

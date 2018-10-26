@@ -4,11 +4,15 @@ import { Form, Item, Input, Label, Button } from 'native-base';
 import barbell from '../static/barbell.png'
 
 export default class Login extends Component {
+    constructor(){
+        super();
+        this.state = {};
+    }
     componentWillMount(){
-        checkForRememberedLogin();
+        this.checkForRememberedLogin(); 
     }
 
-    checkForRememberedLogin = () =>{
+    checkForRememberedLogin(){
         AsyncStorage.getItem("userId").then((res) => {
             this.props.saveUserId(res);
         }).catch((err) => {

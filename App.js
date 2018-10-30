@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import { StyleSheet, ScrollView, RefreshControl, AsyncStorage} from 'react-native';
 import {Header, Left, Icon, Button, Container, Body, H2, Drawer } from 'native-base';
 
 import AddExercise from './components/AddExercise';
@@ -12,9 +12,13 @@ export default class App extends React.Component {
     super();
     this.state={
       refreshing: true,
-      stage:'login'
+      stage:''
     };
   }
+
+  componentWillMount(){
+    this.checkForRememberedLogin(); 
+}
 
   onRefresh = () => {
     this.setState({refreshing: true})
@@ -22,7 +26,7 @@ export default class App extends React.Component {
   }
 
   getWorkouts(userId){
-    return fetch('https://muscles.herokuapp.com/workouts/user', {
+    return fetch('http://muscles.herokuapp.com/workouts/user', {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, cors, *same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -47,7 +51,7 @@ export default class App extends React.Component {
             }
         })
         .catch(error =>{
-            console.log("Error",error)
+            console.log("Fetch Workouts Error",error)
         }); // parses response to JSON
   };
 
@@ -80,6 +84,17 @@ export default class App extends React.Component {
     });
     this.getWorkouts(userId);
   }
+
+  checkForRememberedLogin(){
+    AsyncStorage.getItem("userId").then((res) => {
+        this.saveUserId(res);
+    }).catch((err) => {
+        console.log(err);
+        this.setState({
+          stage:'login'
+        })
+    });
+}
 
   render() {
     return (
@@ -136,7 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    height: 70
+    height: 100
   },
   title: {
     fontSize: 28,

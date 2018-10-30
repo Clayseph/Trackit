@@ -8,17 +8,6 @@ export default class Login extends Component {
         super();
         this.state = {};
     }
-    componentWillMount(){
-        this.checkForRememberedLogin(); 
-    }
-
-    checkForRememberedLogin(){
-        AsyncStorage.getItem("userId").then((res) => {
-            this.props.saveUserId(res);
-        }).catch((err) => {
-            console.log(err);
-        });
-    }
 
     updateUsername = (event) =>{
         this.setState({
@@ -36,7 +25,7 @@ export default class Login extends Component {
             username: this.state.username, 
             password: this.state.password
         }
-        return fetch('https://muscles.herokuapp.com/users/login', {
+        return fetch('http://muscles.herokuapp.com/users/login', {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, cors, *same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -57,7 +46,7 @@ export default class Login extends Component {
             }
         })
         .catch(error =>{
-            console.log("Error",error)
+            console.log("Login Error",error)
         }); // parses response to JSON
     }
   render() {

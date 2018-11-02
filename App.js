@@ -85,8 +85,20 @@ export default class App extends React.Component {
     this.getWorkouts(userId);
   }
 
+  deleteUserId = () =>{
+    AsyncStorage.removeItem('userId')
+      .then(()=>{
+        this.setState({
+          userId: null,
+          stage: 'login'
+        });
+        this.closeDrawer();
+      });
+
+  }
+
   checkForRememberedLogin(){
-    AsyncStorage.getItem("userId").then((res) => {
+    AsyncStorage.getItem('userId').then((res) => {
         this.saveUserId(res);
     }).catch((err) => {
         console.log(err);
@@ -104,6 +116,7 @@ export default class App extends React.Component {
             <Sidebar 
               exercisesButtonPress={this.openExercisesPage}
               addExerciseButtonPress={this.openConfigPage}
+              logoutButtonPress={this.deleteUserId}
             />}
           onClose={() => this.closeDrawer()} >
           <Container>

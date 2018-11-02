@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
-import {
-  Form, Item, Input, Label, Button,
-} from 'native-base';
+import { Text, View, StyleSheet, Image, AsyncStorage } from 'react-native';
+import { Form, Item, Input, Label, Button } from 'native-base';
 import barbell from '../static/barbell.png'
 
 export default class Login extends Component {
+    constructor(){
+        super();
+        this.state = {};
+    }
+
     updateUsername = (event) =>{
         this.setState({
             username: event
@@ -22,7 +25,7 @@ export default class Login extends Component {
             username: this.state.username, 
             password: this.state.password
         }
-        return fetch('https://muscles.herokuapp.com/users/login', {
+        return fetch('http://muscles.herokuapp.com/users/login', {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, cors, *same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -36,14 +39,14 @@ export default class Login extends Component {
         .then(response => response.json())
         .then(response =>{
             if(response){
-                console.log(response._id)
+                AsyncStorage.setItem("userId",response._id);
                 this.props.saveUserId(response._id);
             } else{
                 console.log('Login Failed')
             }
         })
         .catch(error =>{
-            console.log("Error",error)
+            console.log("Login Error",error)
         }); // parses response to JSON
     }
   render() {

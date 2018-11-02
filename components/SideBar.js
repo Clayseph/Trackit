@@ -21,8 +21,8 @@ export default class Sidebar extends Component {
               <Button full style={styles.button}>
                 <Text style={styles.buttonText}>Dummy</Text>
               </Button>
-              <Button full style={styles.button}>
-                <Text style={styles.buttonText}>Dummy</Text>
+              <Button full style={styles.button} onPress={this.props.logoutButtonPress}>
+                <Text style={styles.buttonText}>Log Out</Text>
               </Button>
           </Content>
     );

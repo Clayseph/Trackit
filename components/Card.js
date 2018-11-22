@@ -80,7 +80,7 @@ updateExercise = (id) => {
     })
     .then(response => response.json)
     .then(res => {
-      console.log(res, 'WATTTTTT')
+      console.log(res)
       this.props.refresh();
       this.setState({edit: false})
     })

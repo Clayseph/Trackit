@@ -99,7 +99,13 @@ export default class App extends React.Component {
 
   checkForRememberedLogin(){
     AsyncStorage.getItem('userId').then((res) => {
+      if(res){
         this.saveUserId(res);
+      } else{
+        this.setState({
+          stage:'login'
+        });
+      }
     }).catch((err) => {
         console.log(err);
         this.setState({

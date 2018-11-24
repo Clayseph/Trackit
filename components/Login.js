@@ -62,7 +62,7 @@ export default class Login extends Component {
                 </Item>
                 <Item stackedLabel>
                     <Label>Password</Label>
-                    <Input onChangeText={this.updatePassword} />
+                    <Input secureTextEntry={ true } onChangeText={ this.updatePassword } />
                 </Item>
             </Form>
             <Button full style={styles.button} onPress={this.login}>

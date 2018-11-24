@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, RefreshControl, AsyncStorage} from 'react-nativ
 import {Header, Left, Icon, Button, Container, Body, H2, Drawer } from 'native-base';
 
 import AddExercise from './components/AddExercise';
-import Card from './components/Card';
+import Exercises from './components/Exercises';
 import Login from './components/Login';
 import Sidebar from './components/SideBar';
 
@@ -145,7 +145,7 @@ export default class App extends React.Component {
                 refreshing={this.state.refreshing}
                 onRefresh={this.onRefresh}/>
                 }>
-              <Card exercises={this.state.responseJson} refresh={this.onRefresh}/> 
+              <Exercises exercises={this.state.responseJson} refresh={this.onRefresh}/> 
             </ScrollView>
                   : null}
               {this.state.stage == 'addExercise' ? 

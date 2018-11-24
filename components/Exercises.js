@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { Input, Item, Button } from 'native-base';
 
-export default class Card extends Component {
+export default class Exercises extends Component {
   constructor(){
     super();
     this.state = {}

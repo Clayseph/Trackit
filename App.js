@@ -22,11 +22,11 @@ export default class App extends React.Component {
 
   onRefresh = () => {
     this.setState({refreshing: true})
-    this.getWorkouts(this.state.userId);
+    this.getExercises(this.state.userId);
   }
 
-  getWorkouts(userId){
-    return fetch('http://muscles.herokuapp.com/workouts/user', {
+  getExercises(userId){
+    return fetch('http://muscles.herokuapp.com/exercises/user', {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, cors, *same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -82,7 +82,7 @@ export default class App extends React.Component {
     this.setState({
       userId: userId
     });
-    this.getWorkouts(userId);
+    this.getExercises(userId);
   }
 
   deleteUserId = () =>{

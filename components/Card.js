@@ -11,7 +11,7 @@ export default class Card extends Component {
   }
 
   deleteCard = (id) => {
-    return fetch('https://muscles.herokuapp.com/workouts/remove', {
+    return fetch('https://muscles.herokuapp.com/exercises/remove', {
       method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, cors, *same-origin
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -67,7 +67,7 @@ updateExercise = (id) => {
         weight: this.state.editWeight
   }
   console.log('exercise',exercise)
-  return fetch('https://muscles.herokuapp.com/workouts/update', {
+  return fetch('https://muscles.herokuapp.com/exercises/update', {
       method: 'PUT', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, cors, *same-origin
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

@@ -46,7 +46,7 @@ export default class AddExercise extends Component{
             reps: this.state.reps,
             weight: this.state.weight
         }
-        return fetch('https://muscles.herokuapp.com/workouts/add', {
+        return fetch('https://muscles.herokuapp.com/exercises/add', {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, cors, *same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

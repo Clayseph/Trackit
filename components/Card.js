@@ -92,40 +92,40 @@ updateExercise = (id) => {
   render() {
     return (
         <View>
-          {this.props.workouts.map((workout, id) =>
-            <TouchableNativeFeedback key={id} onLongPress={() => this.editExercise(workout._id)}>
+          {this.props.exercises.map((exercise, id) =>
+            <TouchableNativeFeedback key={id} onLongPress={() => this.editExercise(exercise._id)}>
                 <View style={styles.card}>
-                  <Text style={styles.workoutName}>{workout.name}</Text>
-                    {this.state.edit && this.state.editId === workout._id ?
+                  <Text style={styles.exerciseName}>{exercise.name}</Text>
+                    {this.state.edit && this.state.editId === exercise._id ?
                     <View>
                       <View style={styles.inputRow}>
                         <Item fixedLabel style={styles.input}>
-                          <Input keyboardType={'numeric'} placeholder={`${workout.sets}`} onChangeText={this.updateSets}/>
+                          <Input keyboardType={'numeric'} placeholder={`${exercise.sets}`} onChangeText={this.updateSets}/>
                           <Text>sets</Text>
                         </Item>
                         <Item fixedLabel style={styles.input}>
-                          <Input keyboardType={'numeric'} placeholder={`${workout.reps}`} onChangeText={this.updateReps}/>
+                          <Input keyboardType={'numeric'} placeholder={`${exercise.reps}`} onChangeText={this.updateReps}/>
                           <Text>reps</Text>
                         </Item>
                         <Item fixedLabel style={styles.input}>
-                          <Input keyboardType={'numeric'} placeholder={`${workout.weight}`} onChangeText={this.updateWeight}/>
+                          <Input keyboardType={'numeric'} placeholder={`${exercise.weight}`} onChangeText={this.updateWeight}/>
                           <Text>weight</Text>
                         </Item>
                       </View> 
                       <View style={styles.buttonContainer}>
-                        <Button danger style={styles.button} onPress={()=> this.deleteCard(workout._id)}>
+                        <Button danger style={styles.button} onPress={()=> this.deleteCard(exercise._id)}>
                           <Text style={styles.buttonText}>Delete</Text>
                         </Button>
-                        <Button primary style={styles.button} onPress={()=> this.updateExercise(workout._id)}>
+                        <Button primary style={styles.button} onPress={()=> this.updateExercise(exercise._id)}>
                           <Text style={styles.buttonText}>Update</Text>
                         </Button>
                       </View>
                     </View> 
                   :
                   <View style={styles.row}>
-                    <Text style={styles.content}>{workout.sets} sets</Text>
-                    <Text style={styles.content}>{workout.reps} reps</Text>
-                    <Text style={styles.content}>{workout.weight}lbs</Text>
+                    <Text style={styles.content}>{exercise.sets} sets</Text>
+                    <Text style={styles.content}>{exercise.reps} reps</Text>
+                    <Text style={styles.content}>{exercise.weight}lbs</Text>
                   </View>
                   }
                 </View>
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: 'white',
   },
-  workoutName: {
+  exerciseName: {
     alignSelf: 'center',
     fontSize: 22,
     fontWeight: 'bold',

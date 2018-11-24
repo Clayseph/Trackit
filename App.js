@@ -47,11 +47,11 @@ export default class App extends React.Component {
               });
 
             } else{
-                console.log('Get user workouts failed')
+                console.log('Get user exercises failed')
             }
         })
         .catch(error =>{
-            console.log("Fetch Workouts Error",error)
+            console.log("Fetch Exercises Error",error)
         }); // parses response to JSON
   };
 
@@ -145,7 +145,7 @@ export default class App extends React.Component {
                 refreshing={this.state.refreshing}
                 onRefresh={this.onRefresh}/>
                 }>
-              <Card workouts={this.state.responseJson} refresh={this.onRefresh}/> 
+              <Card exercises={this.state.responseJson} refresh={this.onRefresh}/> 
             </ScrollView>
                   : null}
               {this.state.stage == 'addExercise' ? 

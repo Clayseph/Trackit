@@ -6,6 +6,7 @@ import AddExercise from './components/AddExercise';
 import Exercises from './components/Exercises';
 import Login from './components/Login';
 import Sidebar from './components/SideBar';
+import Workouts from './components/Workouts';
 
 export default class App extends React.Component {
   constructor(){
@@ -64,6 +65,7 @@ export default class App extends React.Component {
   };
 
   openConfigPage = () => {
+    console.log('open config page button')
     this.closeDrawer();
     this.setState({
       stage: 'addExercise',
@@ -75,6 +77,14 @@ export default class App extends React.Component {
     this.onRefresh();
     this.setState({
       stage: 'exercises'
+    });
+  }
+
+  openWorkoutsPage = () => {
+    this.closeDrawer();
+    this.onRefresh();
+    this.setState({
+      stage: 'workouts'
     });
   }
 
@@ -115,14 +125,16 @@ export default class App extends React.Component {
 }
 
   render() {
+    console.log(this.state.stage)
     return (
         <Drawer
           ref={(ref) => { this.drawer = ref; }}
           content={
             <Sidebar 
-              exercisesButtonPress={this.openExercisesPage}
               addExerciseButtonPress={this.openConfigPage}
+              exercisesButtonPress={this.openExercisesPage}
               logoutButtonPress={this.deleteUserId}
+              workoutsButtonPress={this.openWorkoutsPage}
             />}
           onClose={() => this.closeDrawer()} >
           <Container>
@@ -138,6 +150,9 @@ export default class App extends React.Component {
               </Body>
             </Header>
             }
+            {this.state.stage == 'workouts' ?
+                <Workouts userId={ this.state.userId } refresh={this.onRefresh}/> 
+            : null}
             {this.state.stage == 'exercises' ? 
             <ScrollView
               refreshControl={

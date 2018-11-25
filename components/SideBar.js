@@ -18,8 +18,8 @@ export default class Sidebar extends Component {
               <Button full style={styles.button} onPress={this.props.addExerciseButtonPress}>
                 <Text style={styles.buttonText}>Add Exercise</Text>
               </Button>
-              <Button full style={styles.button}>
-                <Text style={styles.buttonText}>Dummy</Text>
+              <Button full style={styles.button} onPress={this.props.workoutsButtonPress}>
+                <Text style={styles.buttonText}>My Workout Days</Text>
               </Button>
               <Button full style={styles.button} onPress={this.props.logoutButtonPress}>
                 <Text style={styles.buttonText}>Log Out</Text>
